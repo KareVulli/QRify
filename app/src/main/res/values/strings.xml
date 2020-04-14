@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">QRify</string>
+    <string name="main_activity_scanned">Scanned: %1$s</string>
+</resources>
