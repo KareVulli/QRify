@@ -4,9 +4,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.google.zxing.BarcodeFormat;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class GeneratorActivity extends AppCompatActivity {
 
@@ -28,7 +33,8 @@ public class GeneratorActivity extends AppCompatActivity {
 
     private void getInputValue() {
         inputText = inputField.getText().toString();
-        displayMessage();
+        //displayMessage();
+        generateCode();
     }
 
     private void displayMessage() {
@@ -38,5 +44,16 @@ public class GeneratorActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("ok", (dialog, which) -> {
                 }).show();
+    }
+
+    private void generateCode() {
+        try {
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.encodeBitmap(inputText, BarcodeFormat.QR_CODE, 400, 400);
+            ImageView imageViewQrCode = (ImageView) findViewById(R.id.qrCode);
+            imageViewQrCode.setImageBitmap(bitmap);
+        } catch(Exception e) {
+
+        }
     }
 }
