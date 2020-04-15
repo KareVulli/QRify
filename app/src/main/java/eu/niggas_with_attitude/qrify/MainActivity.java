@@ -17,6 +17,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends AppCompatActivity {
 
     private Button openScannerButton;
+    private Button openGeneratorButton;
     private TextView helloText;
 
     @Override
@@ -27,12 +28,16 @@ public class MainActivity extends AppCompatActivity {
         helloText = findViewById(R.id.helloText);
 
         openScannerButton = findViewById(R.id.openScannerButton);
+        openGeneratorButton = findViewById(R.id.openGeneratorButton);
+
         openScannerButton.setOnClickListener(
                 v -> new IntentIntegrator(MainActivity.this)
                         .setOrientationLocked(false)
                         .setCaptureActivity(ScannerActivity.class)
                         .initiateScan()
         );
+
+        openGeneratorButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GeneratorActivity.class)));
     }
 
     @Override
