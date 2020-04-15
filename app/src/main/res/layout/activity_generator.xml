@@ -6,13 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".GeneratorActivity">
 
-    <TextView
-        android:id="@+id/generatorHello"
+    <EditText
+        android:id="@+id/generatorInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I am generator"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="216dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Input text"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/generateButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/generateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="172dp"
+        android:text="Generate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
