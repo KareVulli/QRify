@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,6 +42,10 @@ public class GeneratorActivity extends AppCompatActivity {
 
         generateButton.setOnClickListener(view -> getInputValue());
         saveButton.setOnClickListener(view -> shareImage());
+
+        // Used so that temporary images can be saved
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
     }
 
     // Gets the input value from input field
