@@ -2,6 +2,7 @@ package eu.niggas_with_attitude.qrify;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 
 import android.content.Intent;
@@ -42,10 +43,6 @@ public class GeneratorActivity extends AppCompatActivity {
 
         generateButton.setOnClickListener(view -> getInputValue());
         saveButton.setOnClickListener(view -> shareImage());
-
-        // Used so that temporary images can be saved
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
     }
 
     // Gets the input value from input field
@@ -84,7 +81,9 @@ public class GeneratorActivity extends AppCompatActivity {
             FileOutputStream stream = new FileOutputStream(file);
             qrcode.compress(Bitmap.CompressFormat.PNG, 90, stream);
             stream.close();
-            uri = Uri.fromFile(file);
+            uri = FileProvider.getUriForFile(GeneratorActivity.this,
+                    BuildConfig.APPLICATION_ID + ".provider",
+                    file);
         } catch (IOException e) {
             e.printStackTrace();
         }
