@@ -93,11 +93,18 @@ public class GeneratorActivity extends AppCompatActivity {
 
     // Shares the temp image that was saved
     private void shareImage() {
-        Uri toSend = saveImageExternal();
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("image/png");
-        intent.putExtra(Intent.EXTRA_STREAM, toSend);
-        startActivity(Intent.createChooser(intent , "Share"));
+        if(qrcode != null) {
+            Uri toSend = saveImageExternal();
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("image/png");
+            // Grants temporary read permission
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.putExtra(Intent.EXTRA_STREAM, toSend);
+            startActivity(Intent.createChooser(intent , "Share"));
+        } else {
+            displayMessage("Error", "No QRcode generated");
+        }
+
     }
 
 }
