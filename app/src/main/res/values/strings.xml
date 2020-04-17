@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">QRify</string>
     <string name="main_activity_scanned">Scanned: %1$s</string>
+    <string name="scan_result_activity_copy_button">Copy</string>
+    <string name="scan_result_activity_open_page_button">Open website</string>
+    <string name="scan_result_activity_share_button">Share</string>
 </resources>
