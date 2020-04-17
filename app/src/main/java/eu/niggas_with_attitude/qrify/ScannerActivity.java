@@ -49,7 +49,7 @@ public class ScannerActivity extends AppCompatActivity {
         capture = new CaptureManager(this, barcodeScannerView);
         capture.initializeFromIntent(getIntent(), savedInstanceState);
         capture.setShowMissingCameraPermissionDialog(false);
-        barcodeScannerView.decodeSingle(callback);
+        barcodeScannerView.decodeContinuous(callback);
     }
 
     @Override

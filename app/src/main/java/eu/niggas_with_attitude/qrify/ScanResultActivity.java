@@ -31,8 +31,11 @@ public class ScanResultActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 
         resultText = findViewById(R.id.resultText);
-        resultText.setText(message);
+        copyButton = findViewById(R.id.copyButton);
+        shareButton = findViewById(R.id.shareButton);
         openPageButton = findViewById(R.id.openPageButton);
+        
+        resultText.setText(message);
 
         if (URLUtil.isValidUrl(message)) {
             openPageButton.setVisibility(View.VISIBLE);
