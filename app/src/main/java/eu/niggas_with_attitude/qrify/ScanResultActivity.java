@@ -56,8 +56,8 @@ public class ScanResultActivity extends AppCompatActivity {
 
         copyButton.setOnClickListener(
             view -> {
-                clipData = ClipData.newPlainText("text", message);
-                clipboardManager.setPrimaryClip((clipData));
+                ClipData clipData = ClipData.newPlainText("text", message);
+                clipboardManager.setPrimaryClip(clipData);
                 Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT).show();
             }
         );
