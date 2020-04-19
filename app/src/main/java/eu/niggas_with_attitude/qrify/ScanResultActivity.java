@@ -25,7 +25,6 @@ public class ScanResultActivity extends AppCompatActivity {
     private Button shareButton;
     private Button openPageButton;
     private ClipboardManager clipboardManager;
-    public ClipData clipData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
