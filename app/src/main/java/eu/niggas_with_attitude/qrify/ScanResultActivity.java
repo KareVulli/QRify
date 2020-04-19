@@ -24,12 +24,12 @@ public class ScanResultActivity extends AppCompatActivity {
     private Button copyButton;
     private Button shareButton;
     private Button openPageButton;
-    private ClipboardManager myClipboard;
-    private ClipData myClip;
+    private ClipboardManager clipboardManager;
+    public ClipData clipData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        myClipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+        clipboardManager = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
@@ -56,9 +56,9 @@ public class ScanResultActivity extends AppCompatActivity {
 
         copyButton.setOnClickListener(
             view -> {
-            myClip = ClipData.newPlainText("text", message);
-            myClipboard.setPrimaryClip((myClip));
-            Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT).show();
+                clipData = ClipData.newPlainText("text", message);
+                clipboardManager.setPrimaryClip((clipData));
+                Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT).show();
             }
         );
 
