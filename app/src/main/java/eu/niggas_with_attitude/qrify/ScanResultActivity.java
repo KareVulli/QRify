@@ -2,6 +2,8 @@ package eu.niggas_with_attitude.qrify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.ClipboardManager;
+
 
 public class ScanResultActivity extends AppCompatActivity {
 
@@ -20,9 +24,13 @@ public class ScanResultActivity extends AppCompatActivity {
     private Button copyButton;
     private Button shareButton;
     private Button openPageButton;
+    private ClipboardManager myClipboard;
+    private ClipData myClip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        myClipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
 
@@ -45,5 +53,14 @@ public class ScanResultActivity extends AppCompatActivity {
                 startActivity(i);
             });
         }
+
+        copyButton.setOnClickListener(
+            view -> {
+            myClip = ClipData.newPlainText("text", message);
+            myClipboard.setPrimaryClip((myClip));
+            Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT).show();
+            }
+        );
+
     }
 }
