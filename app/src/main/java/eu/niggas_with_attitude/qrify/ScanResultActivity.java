@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,8 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.ClipboardManager;
-
-import java.util.List;
 
 import eu.niggas_with_attitude.qrify.database.CodeDatabase;
 import eu.niggas_with_attitude.qrify.database.dao.SavedCodeDao;
@@ -82,10 +79,5 @@ public class ScanResultActivity extends AppCompatActivity {
         savedCode.setCode(msg);
         savedCode.setSource(0);
         savedCodeDao.insert(savedCode);
-
-        List<SavedCode> savedCodeList = savedCodeDao.getAll();
-        for(SavedCode savedCode1 :  savedCodeList) {
-            System.out.println(savedCode1.getId() + " : " + savedCode1.getCode() + " : " + savedCode1.getSource());
-        }
     }
 }
