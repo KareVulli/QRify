@@ -26,7 +26,7 @@ public interface SavedCodeDao {
 
     // Insert a new code
     @Insert
-    void insert(SavedCode... saved_codes);
+    void insert(SavedCode savedCode);
 
     // Deletes a code, should not need to use it
     @Delete

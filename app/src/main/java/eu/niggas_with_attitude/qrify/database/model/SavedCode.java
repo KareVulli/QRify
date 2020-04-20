@@ -15,6 +15,10 @@ public class SavedCode {
     @ColumnInfo(name = "source")
     private int source; // 0 - scanned, 1 - generated
 
+    // Don't use this
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setCode(String code) {
         this.code = code;
     }
