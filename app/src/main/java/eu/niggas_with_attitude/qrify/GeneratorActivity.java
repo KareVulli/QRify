@@ -3,6 +3,7 @@ package eu.niggas_with_attitude.qrify;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.room.Room;
 
 
 import android.content.Intent;
@@ -21,6 +22,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import eu.niggas_with_attitude.qrify.database.CodeDatabase;
+import eu.niggas_with_attitude.qrify.database.dao.SavedCodeDao;
+import eu.niggas_with_attitude.qrify.database.model.SavedCode;
+
 public class GeneratorActivity extends AppCompatActivity {
 
     private String inputText;
@@ -31,10 +36,15 @@ public class GeneratorActivity extends AppCompatActivity {
     private Button saveButton;
     private EditText inputField;
 
+    private SavedCodeDao savedCodeDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generator);
+        CodeDatabase codeDatabase = Room.databaseBuilder(getApplicationContext(),
+                CodeDatabase.class, "code-db").allowMainThreadQueries().build();
+        savedCodeDao = codeDatabase.getSavedCodeDao();
 
         generateButton = findViewById(R.id.generateButton);
         inputField = findViewById(R.id.generatorInput);
@@ -47,7 +57,10 @@ public class GeneratorActivity extends AppCompatActivity {
     // Gets the input value from input field
     private void getInputValue() {
         inputText = inputField.getText().toString();
-        generateCode();
+        if(!inputText.equals("")) {
+            generateCode();
+            insertCodeToDatabase();
+        }
     }
 
     // Displays message TODO: Remove when unnecessary
@@ -102,6 +115,15 @@ public class GeneratorActivity extends AppCompatActivity {
         } else {
             displayMessage("Error", "No QRcode generated");
         }
+
+    }
+
+    // Inserts the generated code into the database
+    private void insertCodeToDatabase() {
+        SavedCode savedCode = new SavedCode();
+        savedCode.setCode(inputText);
+        savedCode.setSource(1);
+        savedCodeDao.insert(savedCode);
 
     }
 
