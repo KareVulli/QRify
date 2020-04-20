@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "saved_codes")
 public class SavedCode {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true) // Unique ID
     private int id;
 
-    @ColumnInfo(name = "code")
+    @ColumnInfo(name = "code") // Saved code string
     private String code;
 
     @ColumnInfo(name = "source")
