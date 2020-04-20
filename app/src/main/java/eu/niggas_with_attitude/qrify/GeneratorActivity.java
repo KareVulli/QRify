@@ -1,6 +1,5 @@
 package eu.niggas_with_attitude.qrify;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.room.Room;
@@ -51,12 +50,11 @@ public class GeneratorActivity extends AppCompatActivity {
         inputField = findViewById(R.id.generatorInput);
         saveButton = findViewById(R.id.qrSaveButton);
 
-        generateButton.setOnClickListener(view -> getInputValue());
-        saveButton.setOnClickListener(view -> shareImage());
+        generateButton.setOnClickListener(view -> generateInputHandler());
+        saveButton.setOnClickListener(view -> shareClickHandler());
     }
 
-    // Gets the input value from input field
-    private void getInputValue() {
+    private void generateInputHandler() {
         inputText = inputField.getText().toString();
         if(!inputText.equals("")) {
             generateCode();
@@ -95,9 +93,19 @@ public class GeneratorActivity extends AppCompatActivity {
         return uri;
     }
 
+    private void shareClickHandler() {
+        inputText = inputField.getText().toString();
+        if(!inputText.equals("")) {
+            generateCode();
+            insertCodeToDatabase();
+            shareImage();
+        } else {
+            Toast.makeText(getApplicationContext(), "Input text cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // Shares the temp image that was saved
     private void shareImage() {
-        if(qrcode != null) {
             Uri toSend = saveImageExternal();
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("image/png");
@@ -105,11 +113,6 @@ public class GeneratorActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.putExtra(Intent.EXTRA_STREAM, toSend);
             startActivity(Intent.createChooser(intent , "Share"));
-        } else {
-            Toast.makeText(getApplicationContext(), "No QRcode generated", Toast.LENGTH_SHORT).show();
-
-        }
-
     }
 
     // Inserts the generated code into the database
