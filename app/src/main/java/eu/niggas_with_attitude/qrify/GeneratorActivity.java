@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
@@ -60,17 +61,9 @@ public class GeneratorActivity extends AppCompatActivity {
         if(!inputText.equals("")) {
             generateCode();
             insertCodeToDatabase();
+        } else {
+            Toast.makeText(getApplicationContext(), "Input text cannot be empty", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    // Displays message TODO: Remove when unnecessary
-    private void displayMessage(String title, String msg) {
-        new AlertDialog.Builder(GeneratorActivity.this)
-                .setTitle(title)
-                .setMessage(msg)
-                .setCancelable(false)
-                .setPositiveButton("ok", (dialog, which) -> {
-                }).show();
     }
 
     // Generates the QRcode and displays it for the user
@@ -113,7 +106,8 @@ public class GeneratorActivity extends AppCompatActivity {
             intent.putExtra(Intent.EXTRA_STREAM, toSend);
             startActivity(Intent.createChooser(intent , "Share"));
         } else {
-            displayMessage("Error", "No QRcode generated");
+            Toast.makeText(getApplicationContext(), "No QRcode generated", Toast.LENGTH_SHORT).show();
+
         }
 
     }
