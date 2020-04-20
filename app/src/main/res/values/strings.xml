@@ -9,4 +9,8 @@
     <string name="history_slider_up_arrow_description">upArrow</string>
     <string name="history_slider_archive">ARCHIVE</string>
     <string name="scanner_activity_generate_button">Generate QR Code</string>
+    <string name="generator_activity_generate_button">Generate</string>
+    <string name="generator_activity_input_text_placeholder">Input text</string>
+    <string name="generator_activity_share_button">Share</string>
+    <string name="generator_activity_image_description">this-is-qrcode</string>
 </resources>

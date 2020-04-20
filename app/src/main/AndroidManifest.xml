@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ScanResultActivity" />
-        <activity android:name=".GeneratorActivity" />
+        <activity android:name=".GeneratorActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".ScannerActivity" android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
