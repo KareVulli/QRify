@@ -1,6 +1,5 @@
 package eu.niggas_with_attitude.qrify;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.room.Room;
@@ -14,6 +13,7 @@ import android.os.Environment;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
@@ -50,27 +50,18 @@ public class GeneratorActivity extends AppCompatActivity {
         inputField = findViewById(R.id.generatorInput);
         saveButton = findViewById(R.id.qrSaveButton);
 
-        generateButton.setOnClickListener(view -> getInputValue());
-        saveButton.setOnClickListener(view -> shareImage());
+        generateButton.setOnClickListener(view -> generateInputHandler());
+        saveButton.setOnClickListener(view -> shareClickHandler());
     }
 
-    // Gets the input value from input field
-    private void getInputValue() {
+    private void generateInputHandler() {
         inputText = inputField.getText().toString();
         if(!inputText.equals("")) {
             generateCode();
             insertCodeToDatabase();
+        } else {
+            Toast.makeText(getApplicationContext(), "Input text cannot be empty", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    // Displays message TODO: Remove when unnecessary
-    private void displayMessage(String title, String msg) {
-        new AlertDialog.Builder(GeneratorActivity.this)
-                .setTitle(title)
-                .setMessage(msg)
-                .setCancelable(false)
-                .setPositiveButton("ok", (dialog, which) -> {
-                }).show();
     }
 
     // Generates the QRcode and displays it for the user
@@ -102,9 +93,19 @@ public class GeneratorActivity extends AppCompatActivity {
         return uri;
     }
 
+    private void shareClickHandler() {
+        inputText = inputField.getText().toString();
+        if(!inputText.equals("")) {
+            generateCode();
+            insertCodeToDatabase();
+            shareImage();
+        } else {
+            Toast.makeText(getApplicationContext(), "Input text cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // Shares the temp image that was saved
     private void shareImage() {
-        if(qrcode != null) {
             Uri toSend = saveImageExternal();
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("image/png");
@@ -112,10 +113,6 @@ public class GeneratorActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.putExtra(Intent.EXTRA_STREAM, toSend);
             startActivity(Intent.createChooser(intent , "Share"));
-        } else {
-            displayMessage("Error", "No QRcode generated");
-        }
-
     }
 
     // Inserts the generated code into the database
