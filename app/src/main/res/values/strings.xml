@@ -4,4 +4,9 @@
     <string name="scan_result_activity_copy_button">Copy</string>
     <string name="scan_result_activity_open_page_button">Open website</string>
     <string name="scan_result_activity_share_button">Share</string>
+    <string name="history_fragment_placeholder">Hello history fragment</string>
+    <string name="history_slider_close_button">Close</string>
+    <string name="history_slider_up_arrow_description">upArrow</string>
+    <string name="history_slider_archive">ARCHIVE</string>
+    <string name="scanner_activity_generate_button">Generate QR Code</string>
 </resources>
