@@ -17,20 +17,21 @@
             android:layout_marginTop="216dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Input text"
+            android:hint="@string/input_text"
             android:inputType="textMultiLine"
             app:layout_constraintBottom_toTopOf="@+id/generateButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.654" />
+            app:layout_constraintVertical_bias="0.654"
+            android:autofillHints="@string/input_text" />
 
         <Button
             android:id="@+id/generateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Generate"
+            android:text="@string/generate"
             app:layout_constraintBottom_toTopOf="@+id/qrSaveButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -38,22 +39,23 @@
 
         <ImageView
             android:id="@+id/qrCode"
-            android:layout_width="400px"
-            android:layout_height="400px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="92dp"
             app:layout_constraintBottom_toTopOf="@+id/generatorInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.103"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:srcCompat="@drawable/ic_launcher_background"
+            android:contentDescription="@string/this_is_qrcode" />
 
         <Button
             android:id="@+id/qrSaveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="96dp"
-            android:text="Share"
+            android:text="@string/share"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
