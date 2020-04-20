@@ -33,30 +33,11 @@ public class MainActivity extends AppCompatActivity {
                 v -> new IntentIntegrator(MainActivity.this)
                         .setOrientationLocked(false)
                         .setCaptureActivity(ScannerActivity.class)
+                        .setBeepEnabled(false)
+                        .setPrompt("")
                         .initiateScan()
         );
 
         openGeneratorButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GeneratorActivity.class)));
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == IntentIntegrator.REQUEST_CODE) {
-            IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
-            if(result.getContents() == null) {
-                Intent originalIntent = result.getOriginalIntent();
-                if (originalIntent == null) {
-                    Log.d("MainActivity", "Cancelled scan");
-                } else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
-                    Toast.makeText(this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                helloText.setText(getString(R.string.main_activity_scanned, result.getContents()));
-            }
-        }
-
     }
 }
