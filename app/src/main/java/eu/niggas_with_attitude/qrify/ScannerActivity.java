@@ -3,6 +3,7 @@ package eu.niggas_with_attitude.qrify;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,10 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.List;
 
+import eu.niggas_with_attitude.qrify.database.CodeDatabase;
+import eu.niggas_with_attitude.qrify.database.dao.SavedCodeDao;
+import eu.niggas_with_attitude.qrify.database.model.SavedCode;
+
 public class ScannerActivity extends AppCompatActivity {
 
     private DecoratedBarcodeView barcodeScannerView;
@@ -28,6 +33,7 @@ public class ScannerActivity extends AppCompatActivity {
     private LinearLayout openHeader;
     private Button generateButton;
     private Button closeSliderButton;
+    private SavedCodeDao savedCodeDao;
 
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
@@ -38,6 +44,8 @@ public class ScannerActivity extends AppCompatActivity {
 
             Intent intent = new Intent(ScannerActivity.this, ScanResultActivity.class);
             intent.putExtra(ScanResultActivity.EXTRA_RESULT_TEXT, result.getText());
+            insertCodeToDatabase(result.getText());
+
             startActivity(intent);
         }
 
@@ -50,6 +58,10 @@ public class ScannerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
+
+        CodeDatabase codeDatabase = Room.databaseBuilder(getApplicationContext(),
+                CodeDatabase.class, "code-db").allowMainThreadQueries().build();
+        savedCodeDao = codeDatabase.getSavedCodeDao();
 
         Toolbar toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
@@ -115,5 +127,12 @@ public class ScannerActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         capture.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void insertCodeToDatabase(String msg) {
+        SavedCode savedCode = new SavedCode();
+        savedCode.setCode(msg);
+        savedCode.setSource(0);
+        savedCodeDao.insert(savedCode);
     }
 }

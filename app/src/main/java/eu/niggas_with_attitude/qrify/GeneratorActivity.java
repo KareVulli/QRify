@@ -59,7 +59,7 @@ public class GeneratorActivity extends AppCompatActivity {
         inputText = inputField.getText().toString();
         if(!inputText.equals("")) {
             generateCode();
-            inputCodeToDatabase();
+            insertCodeToDatabase();
         }
     }
 
@@ -119,7 +119,7 @@ public class GeneratorActivity extends AppCompatActivity {
     }
 
     // Inserts the generated code into the database
-    private void inputCodeToDatabase() {
+    private void insertCodeToDatabase() {
         SavedCode savedCode = new SavedCode();
         savedCode.setCode(inputText);
         savedCode.setSource(1);
