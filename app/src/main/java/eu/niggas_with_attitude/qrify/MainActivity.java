@@ -1,62 +1,61 @@
 package eu.niggas_with_attitude.qrify;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
-import com.google.zxing.client.android.Intents;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button openScannerButton;
-    private Button openGeneratorButton;
-    private TextView helloText;
+    private SlidingUpPanelLayout slidingLayout;
+    private LinearLayout openHeader;
+    private Button closeSliderButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        helloText = findViewById(R.id.helloText);
 
-        openScannerButton = findViewById(R.id.openScannerButton);
-        openGeneratorButton = findViewById(R.id.openGeneratorButton);
+        NavController navController = Navigation.findNavController(this, R.id.main_content);
+        AppBarConfiguration appBarConfiguration =
+                new AppBarConfiguration.Builder(navController.getGraph()).build();
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        NavigationUI.setupWithNavController(
+                toolbar, navController, appBarConfiguration);
 
-        openScannerButton.setOnClickListener(
-                v -> new IntentIntegrator(MainActivity.this)
-                        .setOrientationLocked(false)
-                        .setCaptureActivity(ScannerActivity.class)
-                        .initiateScan()
+        slidingLayout = findViewById(R.id.slidingLayout);
+        openHeader = findViewById(R.id.openHeader);
+        closeSliderButton = findViewById(R.id.closeSliderButton);
+
+        slidingLayout.addPanelSlideListener(new SlidingUpPanelLayout.SimplePanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+                super.onPanelSlide(panel, slideOffset);
+                openHeader.setAlpha(slideOffset);
+            }
+        });
+
+        closeSliderButton.setOnClickListener(
+                v -> slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED)
         );
-
-        openGeneratorButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, GeneratorActivity.class)));
-
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == IntentIntegrator.REQUEST_CODE) {
-            IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
-            if(result.getContents() == null) {
-                Intent originalIntent = result.getOriginalIntent();
-                if (originalIntent == null) {
-                    Log.d("MainActivity", "Cancelled scan");
-                } else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
-                    Toast.makeText(this, "Cancelled due to missing camera permission", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                helloText.setText(getString(R.string.main_activity_scanned, result.getContents()));
-            }
+    public void onBackPressed() {
+        if (slidingLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else {
+            super.onBackPressed();
         }
-
     }
 }

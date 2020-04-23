@@ -18,18 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ScanResultActivity" />
-        <activity android:name=".GeneratorActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScannerActivity" />
-        <activity android:name=".ArchiveActivity">
-
-        </activity>
+        <activity android:name=".ArchiveActivity" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
