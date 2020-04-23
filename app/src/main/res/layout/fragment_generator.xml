@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".GeneratorFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="24dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="80dp"
+        android:background="@drawable/slider_background">
+
+        <TextView
+            android:id="@+id/contentTypeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="24dp"
+            android:text="@string/generator_activity_content_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/textTypeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/generator_activity_text_type"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorDefaultText"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contentTypeText"
+            app:layout_constraintEnd_toStartOf="@id/separator1"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"/>
+
+        <View
+            android:id="@+id/separator1"
+            android:layout_width="2dp"
+            android:layout_height="32dp"
+            android:background="@color/colorDefaultText"
+            app:layout_constraintStart_toEndOf="@id/textTypeButton"
+            app:layout_constraintTop_toTopOf="@id/textTypeButton"
+            app:layout_constraintBottom_toBottomOf="@id/textTypeButton"
+            app:layout_constraintEnd_toStartOf="@id/urlTypeButton"
+            />
+
+        <Button
+            android:id="@+id/urlTypeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/generator_activity_url_type"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorDefaultText"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintStart_toEndOf="@id/separator1"
+            app:layout_constraintTop_toBottomOf="@id/contentTypeText"
+            app:layout_constraintEnd_toStartOf="@id/emailTypeButton"
+            app:layout_constraintHorizontal_chainStyle="spread_inside" />
+
+        <View
+            android:id="@+id/separator2"
+            android:layout_width="2dp"
+            android:layout_height="32dp"
+            android:background="@color/colorDefaultText"
+            app:layout_constraintStart_toEndOf="@id/urlTypeButton"
+            app:layout_constraintTop_toTopOf="@id/textTypeButton"
+            app:layout_constraintBottom_toBottomOf="@id/textTypeButton"
+            app:layout_constraintEnd_toStartOf="@id/emailTypeButton"
+            />
+
+        <Button
+            android:id="@+id/emailTypeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/generator_activity_email_type"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorDefaultText"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintTop_toBottomOf="@id/contentTypeText"
+            app:layout_constraintStart_toEndOf="@id/separator2"
+            app:layout_constraintEnd_toStartOf="@id/phoneTypeButton"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            />
+
+        <View
+            android:id="@+id/separator3"
+            android:layout_width="2dp"
+            android:layout_height="32dp"
+            android:background="@color/colorDefaultText"
+            app:layout_constraintStart_toEndOf="@id/emailTypeButton"
+            app:layout_constraintTop_toTopOf="@id/textTypeButton"
+            app:layout_constraintBottom_toBottomOf="@id/textTypeButton"
+            app:layout_constraintEnd_toStartOf="@id/phoneTypeButton"
+            />
+
+        <Button
+            android:id="@+id/phoneTypeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorDefaultText"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="@string/generator_activity_phone_type"
+            android:background="?android:attr/selectableItemBackground"
+            app:layout_constraintTop_toBottomOf="@id/contentTypeText"
+            app:layout_constraintStart_toEndOf="@id/separator3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            />
+
+        <TextView
+            android:id="@+id/contentInputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="24dp"
+            android:labelFor="@id/generatorInput"
+            android:text="@string/generator_activity_input_title_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/urlTypeButton" />
+
+        <EditText
+            android:id="@+id/generatorInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:importantForAutofill="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contentInputText"/>
+
+        <ImageView
+            android:id="@+id/qrCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/generatorInput"
+            app:srcCompat="@drawable/ic_launcher_background"
+            android:contentDescription="@string/generator_activity_image_description" />
+
+        <Button
+            android:id="@+id/generateButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="4dp"
+            android:text="@string/generator_activity_generate_button"
+            app:layout_constraintTop_toBottomOf="@id/qrCode"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/qrSaveButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="1"/>
+
+        <Button
+            android:id="@+id/qrSaveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginStart="4dp"
+            android:text="@string/generator_activity_share_button"
+            app:layout_constraintTop_toBottomOf="@id/qrCode"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/generateButton"
+            app:layout_constraintVertical_bias="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
