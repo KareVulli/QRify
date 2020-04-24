@@ -5,9 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".HistoryFragment">
 
-    <TextView
-        android:layout_width="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragment_history_list_view"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:text="@string/history_fragment_placeholder" />
+        android:layout_margin="5dp"
+        />
 
 </FrameLayout>
