@@ -44,11 +44,6 @@ public class HistoryFragment extends Fragment {
 
         List<SavedCode> data = savedCodeDao.getAll();
 
-        for(int i = 0; i < data.size(); i++){
-            String text = data.get(i).getCode();
-            Log.d("DATATEXT",text);
-        }
-
         HistoryAdapter mAdapter = new HistoryAdapter(data);
 
         recyclerView.setAdapter(mAdapter);
