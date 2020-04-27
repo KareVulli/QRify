@@ -15,16 +15,28 @@ public class SavedCode {
     @ColumnInfo(name = "source")
     private int source; // 0 - scanned, 1 - generated
 
+    @ColumnInfo(name = "created")
+    private Long timestamp;
+
+    public SavedCode() {
+        timestamp = System.currentTimeMillis();
+    }
+
     // Don't use this
     public void setId(int id) {
         this.id = id;
     }
+
     public void setCode(String code) {
         this.code = code;
     }
 
     public void setSource(int source) {
         this.source = source;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public int getId() {
@@ -37,5 +49,9 @@ public class SavedCode {
 
     public int getSource() {
         return source;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
     }
 }
