@@ -22,4 +22,7 @@
     <string name="generator_activity_url_type">URL</string>
     <string name="generator_activity_text_type">Text</string>
     <string name="generator_activity_content_type">Content type:</string>
+    <string name="scan_result_activity_send_email_button">Send email</string>
+    <string name="scan_result_activity_call_button">Call</string>
+    <string name="scan_result_activity_search_button">Search from web</string>
 </resources>

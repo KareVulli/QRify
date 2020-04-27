@@ -2,6 +2,7 @@ package eu.niggas_with_attitude.qrify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.SearchManager;
 import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,8 +22,9 @@ public class ScanResultActivity extends AppCompatActivity {
     private TextView resultText;
     private Button copyButton;
     private Button shareButton;
-    private Button openPageButton;
+    private Button actionButton;
     private ClipboardManager clipboardManager;
+    private String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +34,18 @@ public class ScanResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_result);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(EXTRA_RESULT_TEXT);
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        message = intent.getStringExtra(EXTRA_RESULT_TEXT);
+        if (message == null) {
+            message = "";
+        }
 
         resultText = findViewById(R.id.resultText);
         copyButton = findViewById(R.id.copyButton);
         shareButton = findViewById(R.id.shareButton);
-        openPageButton = findViewById(R.id.openPageButton);
+        actionButton = findViewById(R.id.actionButton);
         
         resultText.setText(message);
-
-        if (URLUtil.isValidUrl(message)) {
-            openPageButton.setVisibility(View.VISIBLE);
-            openPageButton.setOnClickListener(v -> {
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(message));
-                startActivity(i);
-            });
-        }
+        setupActionButton();
 
         copyButton.setOnClickListener(
             view -> {
@@ -58,5 +54,28 @@ public class ScanResultActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT).show();
             }
         );
+    }
+
+    void setupActionButton () {
+        if (message.startsWith("tel:")) {
+            actionButton.setText(R.string.scan_result_activity_call_button);
+        } else if (message.startsWith("mailto:")) {
+            actionButton.setText(R.string.scan_result_activity_send_email_button);
+        } else if (URLUtil.isValidUrl(message)) {
+            actionButton.setText(R.string.scan_result_activity_open_page_button);
+        } else {
+            actionButton.setText(R.string.scan_result_activity_search_button);
+            actionButton.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, message);
+                startActivity(intent);
+            });
+            return;
+        }
+        actionButton.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(message));
+            startActivity(i);
+        });
     }
 }
