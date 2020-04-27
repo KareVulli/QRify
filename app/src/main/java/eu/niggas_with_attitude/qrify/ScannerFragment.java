@@ -71,7 +71,7 @@ public class ScannerFragment extends Fragment {
         generateButton = view.findViewById(R.id.generateButton);
 
         capture = new CaptureManager(requireActivity(), barcodeScannerView);
-        barcodeScannerView.setStatusText("");
+        barcodeScannerView.setStatusText("Point the camera to a QR Code to scan it");
         barcodeScannerView.decodeContinuous(callback);
 
         generateButton.setOnClickListener(v -> NavHostFragment
