@@ -8,7 +8,6 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,7 +15,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -232,7 +230,6 @@ public class GeneratorFragment extends Fragment {
         savedCode.setCode(inputText);
         savedCode.setSource(1);
         savedCodeDao.insert(savedCode);
-
     }
 
 }
