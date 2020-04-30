@@ -12,12 +12,11 @@
         android:layout_margin="20dp"
         android:padding="10dp"
         android:textColor="#000000"
-        android:textFontWeight="700"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints">
+        tools:text="Content">
     </TextView>
 
 
