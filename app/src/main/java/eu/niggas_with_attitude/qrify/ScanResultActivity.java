@@ -39,18 +39,20 @@ public class ScanResultActivity extends AppCompatActivity {
         }
 
         resultText = findViewById(R.id.resultText);
-        copyButton = findViewById(R.id.copyButton);
         shareButton = findViewById(R.id.shareButton);
         actionButton = findViewById(R.id.actionButton);
         
         resultText.setText(message);
+
+        ClipData clipData = ClipData.newPlainText("text", message);
+        clipboardManager.setPrimaryClip(clipData);
+        Toast.makeText(getApplicationContext(), "Content copied to clipboard", Toast.LENGTH_SHORT).show();
+
         setupActionButton();
 
-        copyButton.setOnClickListener(
+        shareButton.setOnClickListener(
             view -> {
-                ClipData clipData = ClipData.newPlainText("text", message);
-                clipboardManager.setPrimaryClip(clipData);
-                Toast.makeText(getApplicationContext(), "Text Copied", Toast.LENGTH_SHORT).show();
+                shareText(message);
             }
         );
     }
@@ -76,5 +78,12 @@ public class ScanResultActivity extends AppCompatActivity {
             i.setData(Uri.parse(message));
             startActivity(i);
         });
+    }
+
+    private void shareText(String message) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        startActivity(Intent.createChooser(intent , "Share"));
     }
 }
