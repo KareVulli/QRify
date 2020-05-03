@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.room.Room;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,13 +31,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import eu.niggas_with_attitude.qrify.database.CodeDatabase;
-import eu.niggas_with_attitude.qrify.database.dao.SavedCodeDao;
 import eu.niggas_with_attitude.qrify.database.model.SavedCode;
+import eu.niggas_with_attitude.qrify.viewmodels.HistoryViewModel;
 
 public class GeneratorFragment extends Fragment {
 
     private String inputText;
+
+    private HistoryViewModel viewModel;
 
     private Bitmap qrcode;
 
@@ -51,8 +52,6 @@ public class GeneratorFragment extends Fragment {
     private Button urlTypeButton;
     private Button emailTypeButton;
     private Button phoneTypeButton;
-
-    private SavedCodeDao savedCodeDao;
 
     private static final int TYPE_TEXT = 0;
     private static final int TYPE_URL = 1;
@@ -72,9 +71,7 @@ public class GeneratorFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CodeDatabase codeDatabase = Room.databaseBuilder(requireContext(),
-                CodeDatabase.class, "code-db").allowMainThreadQueries().build();
-        savedCodeDao = codeDatabase.getSavedCodeDao();
+        viewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
 
         generateButton = view.findViewById(R.id.generateButton);
         inputField = view.findViewById(R.id.generatorInput);
@@ -229,7 +226,7 @@ public class GeneratorFragment extends Fragment {
         SavedCode savedCode = new SavedCode();
         savedCode.setCode(inputText);
         savedCode.setSource(1);
-        savedCodeDao.insert(savedCode);
+        viewModel.insertSavedCode(savedCode);
     }
 
 }

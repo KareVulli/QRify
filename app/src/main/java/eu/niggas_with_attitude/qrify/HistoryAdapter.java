@@ -22,6 +22,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         this.listener = listener;
     }
 
+    void setData(List<SavedCode> data) {
+        this.data = data;
+    }
+
     @NonNull
     @Override
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
