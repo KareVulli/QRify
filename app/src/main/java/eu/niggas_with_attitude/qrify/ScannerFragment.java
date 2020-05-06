@@ -6,8 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +22,8 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 
 import java.util.List;
 
-import eu.niggas_with_attitude.qrify.database.CodeDatabase;
-import eu.niggas_with_attitude.qrify.database.dao.SavedCodeDao;
 import eu.niggas_with_attitude.qrify.database.model.SavedCode;
+import eu.niggas_with_attitude.qrify.viewmodels.HistoryViewModel;
 
 
 public class ScannerFragment extends Fragment {
@@ -32,7 +31,7 @@ public class ScannerFragment extends Fragment {
     private DecoratedBarcodeView barcodeScannerView;
     private CaptureManager capture;
     private Button generateButton;
-    private SavedCodeDao savedCodeDao;
+    private HistoryViewModel viewModel;
 
     private BarcodeCallback callback = new BarcodeCallback() {
         @Override
@@ -63,9 +62,7 @@ public class ScannerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CodeDatabase codeDatabase = Room.databaseBuilder(requireContext(),
-                CodeDatabase.class, "code-db").allowMainThreadQueries().build();
-        savedCodeDao = codeDatabase.getSavedCodeDao();
+        viewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
 
         barcodeScannerView = view.findViewById(R.id.barcode_scanner);
         generateButton = view.findViewById(R.id.generateButton);
@@ -112,6 +109,6 @@ public class ScannerFragment extends Fragment {
         SavedCode savedCode = new SavedCode();
         savedCode.setCode(msg);
         savedCode.setSource(0);
-        savedCodeDao.insert(savedCode);
+        viewModel.insertSavedCode(savedCode);
     }
 }
