@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import eu.niggas_with_attitude.qrify.database.model.SavedCode;
 
@@ -38,7 +39,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         SavedCode code = data.get(position);
         holder.Code.setText(code.getCode());
         holder.source.setText(getCodeSource(code));
