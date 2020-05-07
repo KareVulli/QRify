@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import eu.niggas_with_attitude.qrify.database.model.SavedCode;
@@ -36,9 +38,20 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
         SavedCode code = data.get(position);
         holder.Code.setText(code.getCode());
+        holder.source.setText(getCodeSource(code));
+        holder.date.setText(sf.format(new Date(code.getTimestamp())));
         holder.itemView.setOnClickListener(v -> listener.onItemClick(code));
+    }
+
+    private String getCodeSource(SavedCode savedCode) {
+        if(savedCode.getSource() == 1) {
+            return "generated";
+        } else {
+            return "scanned";
+        }
     }
 
     @Override
@@ -49,10 +62,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     static class HistoryViewHolder extends RecyclerView.ViewHolder {
 
         TextView Code;
+        TextView date;
+        TextView source;
 
         HistoryViewHolder(View v) {
             super(v);
             Code = v.findViewById(R.id.history_item_code);
+            date = v.findViewById(R.id.history_item_date);
+            source = v.findViewById(R.id.history_item_source);
         }
     }
 
