@@ -10,6 +10,7 @@
     sothree:umanoPanelHeight="72dp"
     sothree:umanoOverlay="true"
     sothree:umanoShadowHeight="0dp"
+    sothree:umanoScrollableView="@id/fragment_history_list_view"
     tools:context=".MainActivity">
 
     <LinearLayout
