@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
@@ -47,11 +48,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.itemView.setOnClickListener(v -> listener.onItemClick(code));
     }
 
-    private String getCodeSource(SavedCode savedCode) {
+    @StringRes
+    private int getCodeSource(SavedCode savedCode) {
         if(savedCode.getSource() == 1) {
-            return "generated";
+            return R.string.history_adapter_generated;
         } else {
-            return "scanned";
+            return R.string.history_adapter_scanned;
         }
     }
 

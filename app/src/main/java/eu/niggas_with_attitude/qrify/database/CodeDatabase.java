@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import eu.niggas_with_attitude.qrify.database.dao.SavedCodeDao;
 import eu.niggas_with_attitude.qrify.database.model.SavedCode;
 
-@Database(entities = {SavedCode.class}, version = 1)
+@Database(entities = {SavedCode.class}, version = 1, exportSchema = false)
 public abstract class CodeDatabase extends RoomDatabase {
     private static CodeDatabase instance;
 
