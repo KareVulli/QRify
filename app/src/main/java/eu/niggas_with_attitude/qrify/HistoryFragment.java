@@ -3,6 +3,7 @@ package eu.niggas_with_attitude.qrify;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -54,8 +55,9 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistor
 
     @Override
     public void onItemClick(SavedCode code) {
-        ClipData clipData = ClipData.newPlainText("text", code.getCode());
-        clipboardManager.setPrimaryClip(clipData);
-        Toast.makeText(requireContext(), "Text Copied", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(requireContext(), ScanResultActivity.class);
+        intent.putExtra(ScanResultActivity.EXTRA_RESULT_TEXT, code.getCode());
+
+        startActivity(intent);
     }
 }
