@@ -224,7 +224,7 @@ public class GeneratorFragment extends Fragment {
     // Inserts the generated code into the database
     private void insertCodeToDatabase() {
         SavedCode savedCode = new SavedCode();
-        savedCode.setCode(inputText);
+        savedCode.setCode(getFormattedInputText());
         savedCode.setSource(1);
         viewModel.insertSavedCode(savedCode);
     }

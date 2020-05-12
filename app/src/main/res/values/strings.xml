@@ -4,6 +4,12 @@
     <string name="scan_result_activity_copy_button">Copy</string>
     <string name="scan_result_activity_open_page_button">Open website</string>
     <string name="scan_result_activity_share_button">Share</string>
+    <string name="scan_result_activity_generated_on">Generated on</string>
+    <string name="scan_result_activity_scanned_on">Scanned on</string>
+    <string name="scan_result_activity_content_text">Text</string>
+    <string name="scan_result_activity_content_url">URL</string>
+    <string name="scan_result_activity_content_email">E-Mail</string>
+    <string name="scan_result_activity_content_phone">Phone</string>
     <string name="history_fragment_placeholder">Hello history fragment</string>
     <string name="history_slider_close_button">Close</string>
     <string name="history_slider_up_arrow_description">upArrow</string>
@@ -24,7 +30,7 @@
     <string name="generator_activity_content_type">Content type:</string>
     <string name="scan_result_activity_send_email_button">Send email</string>
     <string name="scan_result_activity_call_button">Call</string>
-    <string name="scan_result_activity_search_button">Search from web</string>
+    <string name="scan_result_activity_search_button">Search web</string>
     <string name="history_adapter_generated">generated</string>
     <string name="history_adapter_scanned">scanned</string>
 </resources>

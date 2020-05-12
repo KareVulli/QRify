@@ -13,17 +13,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.ClipboardManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import eu.niggas_with_attitude.qrify.database.model.SavedCode;
+
 public class ScanResultActivity extends AppCompatActivity {
 
-    public static final String EXTRA_RESULT_TEXT = "result_text";
-    public static final String EXTRA_RESULT_IMAGE = "result_image";
+    public static final String EXTRA_CODE = "code";
 
+    private TextView contentTypeText;
+    private TextView scannedOnText;
+    private TextView scannedDateText;
     private TextView resultText;
-    private Button copyButton;
     private Button shareButton;
     private Button actionButton;
     private ClipboardManager clipboardManager;
-    private String message;
+    private SavedCode savedCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,37 +40,49 @@ public class ScanResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_result);
 
         Intent intent = getIntent();
-        message = intent.getStringExtra(EXTRA_RESULT_TEXT);
-        if (message == null) {
-            message = "";
-        }
+        savedCode = intent.getParcelableExtra(EXTRA_CODE);
 
+        contentTypeText = findViewById(R.id.contentTypeText);
+        scannedOnText = findViewById(R.id.scannedOnText);
+        scannedDateText = findViewById(R.id.scannedDateText);
         resultText = findViewById(R.id.resultText);
         shareButton = findViewById(R.id.shareButton);
         actionButton = findViewById(R.id.actionButton);
-        
-        resultText.setText(message);
 
+        if (savedCode != null) {
+            String displayCode = savedCode.getDisplayCode();
+
+            resultText.setText(displayCode);
+            shareButton.setOnClickListener(view -> shareText(displayCode));
+
+            copyMessage(displayCode);
+            setupActionButton(savedCode.getCode());
+
+            if (savedCode.getSource() == 1) {
+                scannedOnText.setText(R.string.scan_result_activity_generated_on);
+            }
+
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            scannedDateText.setText(sf.format(new Date(savedCode.getTimestamp())));
+        }
+    }
+
+    private void copyMessage(String message) {
         ClipData clipData = ClipData.newPlainText("text", message);
         clipboardManager.setPrimaryClip(clipData);
         Toast.makeText(getApplicationContext(), "Content copied to clipboard", Toast.LENGTH_SHORT).show();
-
-        setupActionButton();
-
-        shareButton.setOnClickListener(
-            view -> {
-                shareText(message);
-            }
-        );
     }
 
-    void setupActionButton () {
+    void setupActionButton (String message) {
         if (message.startsWith("tel:")) {
             actionButton.setText(R.string.scan_result_activity_call_button);
+            contentTypeText.setText(R.string.scan_result_activity_content_phone);
         } else if (message.startsWith("mailto:")) {
             actionButton.setText(R.string.scan_result_activity_send_email_button);
+            contentTypeText.setText(R.string.scan_result_activity_content_email);
         } else if (URLUtil.isValidUrl(message)) {
             actionButton.setText(R.string.scan_result_activity_open_page_button);
+            contentTypeText.setText(R.string.scan_result_activity_content_url);
         } else {
             actionButton.setText(R.string.scan_result_activity_search_button);
             actionButton.setOnClickListener(v -> {
@@ -71,6 +90,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 intent.putExtra(SearchManager.QUERY, message);
                 startActivity(intent);
             });
+            contentTypeText.setText(R.string.scan_result_activity_content_text);
             return;
         }
         actionButton.setOnClickListener(v -> {

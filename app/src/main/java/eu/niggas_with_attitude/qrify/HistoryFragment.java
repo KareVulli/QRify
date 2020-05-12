@@ -1,8 +1,5 @@
 package eu.niggas_with_attitude.qrify;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,7 +21,6 @@ import eu.niggas_with_attitude.qrify.viewmodels.HistoryViewModel;
 
 public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistoryItemClickListener {
 
-    private ClipboardManager clipboardManager;
     private HistoryViewModel viewModel;
 
     @Override
@@ -38,7 +33,6 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistor
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
         viewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
 
         HistoryAdapter mAdapter = new HistoryAdapter(new ArrayList<>(), this);
@@ -54,10 +48,9 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnHistor
     }
 
     @Override
-    public void onItemClick(SavedCode code) {
+    public void onItemClick(SavedCode savedCode) {
         Intent intent = new Intent(requireContext(), ScanResultActivity.class);
-        intent.putExtra(ScanResultActivity.EXTRA_RESULT_TEXT, code.getCode());
-
+        intent.putExtra(ScanResultActivity.EXTRA_CODE, savedCode);
         startActivity(intent);
     }
 }

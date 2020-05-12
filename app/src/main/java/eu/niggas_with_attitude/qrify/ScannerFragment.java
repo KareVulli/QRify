@@ -39,11 +39,9 @@ public class ScannerFragment extends Fragment {
             if(result.getText() == null) {
                 return;
             }
-
+            SavedCode savedCode = insertCodeToDatabase(result.getText());
             Intent intent = new Intent(requireContext(), ScanResultActivity.class);
-            intent.putExtra(ScanResultActivity.EXTRA_RESULT_TEXT, result.getText());
-            insertCodeToDatabase(result.getText());
-
+            intent.putExtra(ScanResultActivity.EXTRA_CODE, savedCode);
             startActivity(intent);
         }
 
@@ -105,10 +103,11 @@ public class ScannerFragment extends Fragment {
         capture.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void insertCodeToDatabase(String msg) {
+    private SavedCode insertCodeToDatabase(String msg) {
         SavedCode savedCode = new SavedCode();
         savedCode.setCode(msg);
         savedCode.setSource(0);
         viewModel.insertSavedCode(savedCode);
+        return savedCode;
     }
 }

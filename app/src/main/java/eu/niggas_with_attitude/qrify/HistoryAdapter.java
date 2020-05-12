@@ -42,7 +42,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         SavedCode code = data.get(position);
-        holder.Code.setText(code.getCode());
+        holder.Code.setText(code.getDisplayCode());
         holder.source.setText(getCodeSource(code));
         holder.date.setText(sf.format(new Date(code.getTimestamp())));
         holder.itemView.setOnClickListener(v -> listener.onItemClick(code));
