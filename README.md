@@ -11,6 +11,16 @@ The app has following functionality:
 * Share scanned/generated content
 * Support for four types of QR code content: Text, URL, Email, Phone
 
+## How to use
+
+* When starting up the app, it will allow you to take a picture, which it will turn into a QR code
+* Aim the camera at the object you wish to convert and press the generate qr code button
+* This will take you to the main screen, where you can add text, URL, email and phc
+* Here you can also save the generated code into the archive for future use, using the Save button
+* The archive can be accessed from the start screen and the main screen
+* The code can also be shared using the Share button
+* Lastly, you can search the web for the attached text if you open the code from the archive and press the search web button
+
 ## Built With
 
 * [ZXing Android Embedded](https://github.com/journeyapps/zxing-android-embedded) - Powers the scanning and generation of QR codes
